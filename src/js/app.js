@@ -1,3 +1,5 @@
+import './polyfills';
+
 var form = document.getElementById('userForm');
 
 
@@ -87,7 +89,7 @@ function validateform(formToSubmit) {
     return false;
   } else {
 
-  	// showCongrats();
+  	showCongrats();
     form.submit();
 
   }
@@ -252,8 +254,8 @@ function changeMessageStatus(input, messageBox = false) {
 }
 
 
-// function showCongrats() {
+function showCongrats() {
 
-// 	var 
+  alert('CONGRATS, this form was submitted');
 	
-// }
+}
