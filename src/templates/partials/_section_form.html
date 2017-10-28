@@ -1,26 +1,32 @@
 <section class="section section_form">
 <!-- BEGIN BLOCK form-wrapper -->
 <div class="sticker">
-	<form action="" class="form" id="userForm" onsubmit="validateform(this); return false;">
+	<form action="" class="form" id="userForm" >
     <div class="form__field">
       <label class="form__label" for="name">Name</label>
-      <input type="text" name="name" id="name" class="form__input form__input_text" required>
+      <input type="text" name="name" id="name" class="form__input form__input_text js-form-input" required>
+      <p class="error-message js-error-message" data-messagetype="name">Type Name</p>
     </div>
     <div class="form__field">
       <label class="form__label" for="surname">Surname</label>
-      <input type="text" name="surname" id="surname" class="form__input form__input_text" required>
+      <input type="text" name="surname" id="surname" class="form__input form__input_text js-form-input" required>
+      <p class="error-message js-error-message" data-messagetype="surname">Type Surname</p>
     </div>
     <div class="form__field">
       <label class="form__label" for="phone">Phone</label>
-      <input type="text" name="phone" id="phone" class="form__input form__input_text" required>
+      <input type="text" name="phone" id="phone" class="form__input form__input_text js-form-input" required>
+      <p class="error-message js-error-message" data-messagetype="phone">Type phone number</p>
     </div>
     <div class="form__field">
       <label class="form__label" for="email">Email</label>
-      <input type="text" name="email" id="email" class="form__input form__input_text" required>
+      <input type="text" name="email" id="email" class="form__input form__input_text js-form-input" required>
+      <p class="error-message js-error-message" data-messagetype="email">Write email in format
+      example@mail.com</p>
     </div>
     <div class="form__field">
       <label class="form__label" for="password">Password</label>
-      <input type="password" name="password" id="password" class="form__input form__input_text" required>
+      <input type="password" name="password" id="password" class="form__input form__input_text js-form-input" required>
+      <p class="error-message js-error-message" data-messagetype="password">Type password</p>
     </div>
     <div class="form__field form__field_left">
       <label for="checkbox" class="form__label">remember me</label>
@@ -28,7 +34,7 @@
     </div>
 
    <div class="form__field form__field_right">
-   	 <input type="submit" id="submit" class="form__submit button" name="submit js-submit" value="Submit">
+   	 <input type="submit" id="submitForm" class="form__submit button" name="submit js-submit" value="Submit">
    </div>
 
   </form>
@@ -37,3 +43,16 @@
   
 
 </section>
+
+
+<!-- BEGIN BLOCK modal js-status-modal -->
+<div class="modal js-status-modal">
+	<!-- BEGIN BLOCK message -->
+	<div class="modal__message message">
+		<span class="message__text js-message-status"></span>
+		<span class="message__icon js-status-granted"></span>
+		<span class="message__icon js-status-forbidden"></span>
+	</div>
+	<!-- END BLOCK message -->
+</div>
+<!-- END BLOCK modal js-status-modal -->
