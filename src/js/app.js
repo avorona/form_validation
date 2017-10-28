@@ -1,7 +1,5 @@
 var form = document.getElementById('userForm');
 
-// clearInputStatus();
-// clearMessageStatus();
 
 form.addEventListener('submit', function() {
   event.preventDefault();
@@ -98,7 +96,6 @@ function validateform(formToSubmit) {
 }
 
 
-
 function validateInput(form, input, regexp) {
 
 
@@ -116,7 +113,6 @@ function validateInput(form, input, regexp) {
 
 
 }
-
 
 
 
@@ -157,7 +153,6 @@ function validateLength(formOfInputs, typeOfInput) {
 }
 
 
-
 function validateData(formOfInputs, typeOfInput, regexp) {
   var inputValue = typeOfInput.value;
 
@@ -168,8 +163,6 @@ function validateData(formOfInputs, typeOfInput, regexp) {
   return false;
 
 }
-
-
 
 
 
@@ -194,7 +187,6 @@ function showError(element) {
 
 
 
-
 function showStatus(currentElement) {
 
   changeInputStatus(currentElement);
@@ -204,9 +196,6 @@ function showStatus(currentElement) {
 
 
 };
-
-
-
 
 
 function changeInputStatus(input = 'false') {
@@ -229,7 +218,6 @@ function changeInputStatus(input = 'false') {
   changeMessageStatus(input, true);
 
 }
-
 
 
 
@@ -259,7 +247,6 @@ function changeMessageStatus(input, messageBox = false) {
 
 
   });
-
 
 
 }
