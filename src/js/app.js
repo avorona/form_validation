@@ -42,33 +42,45 @@ function validateform(formToSubmit) {
 
     {
       name: form.elements['name'],
-      pattern: regexp.stringRegExp
+      pattern: regexp.stringRegExp,
+      minLength: 'default',
+      maxLength: 'default'
+
     },
     {
       name: form.elements['surname'],
-      pattern: regexp.stringRegExp
+      pattern: regexp.stringRegExp,
+      minLength: 'default',
+      maxLength: 'default'
+
     },
     {
       name: form.elements['phone'],
-      pattern: regexp.digitsRegExp
+      pattern: regexp.digitsRegExp,
+      minLength: 10,
+      maxLength: 12
     },
     {
       name: form.elements['email'],
-      pattern: regexp.emailRegExp
+      pattern: regexp.emailRegExp,
+      minLength: 3,
+      maxLength: 100
     },
 
     {
       name: form.elements['password'],
-      pattern: regexp.mediumPassRegExp
+      pattern: regexp.mediumPassRegExp,
+      minLength: 6,
+      maxLength: 100
     }
 
 
   ];
 
 
-  var booleanArray = inputsArray.map(function(el) {
+  var validationStatus = inputsArray.map(function(el) {
 
-    if (validateInput(form, el.name, el.pattern)) {
+    if (validateInput(form, el.name, el.pattern, el.minLength, el.maxLength)) {
 
       return true;
 
@@ -81,76 +93,84 @@ function validateform(formToSubmit) {
 
   });
 
+  
+
   // show result of validation
-  // console.log(booleanArray);
+  // console.log(validationStatus);
 
+  if (validationStatus.includes(false)) {
 
-  if (booleanArray.includes(false)) {
     return false;
+
   } else {
 
-  	showCongrats();
+    showCongrats();
+
     form.submit();
 
   }
 
-
 }
 
 
-function validateInput(form, input, regexp) {
 
 
-  if ((!validateLength(form, input)) || (!validateData(form, input, regexp))) {
-    // console.log(validateLength(form, input), validateData(form, input, regexp));
+
+// ================================FUNCTION'S DECLARATIONS==================================
+
+
+function validateInput(form, input, regexp, minLength, maxLength) {
+
+  // console.log(minLength, maxLength);
+  if ((!validateLength(form, input, minLength, maxLength)) || (!validateData(form, input, regexp))) {
+
+    // console.log(validateLength(form, input,minLength,maxLength), validateData(form, input, regexp));
 
     showError(input);
 
     return false;
+
   } else {
+
+
     showStatus(input);
 
     return true;
   }
 
-
 }
 
+//============ VALIDATE LENGTH
 
 
-function validateLength(formOfInputs, typeOfInput) {
+function validateLength(formOfInputs, typeOfInput, min, max) {
 
   var inputName = typeOfInput.name;
   var inputValue = typeOfInput.value;
   var inputValueLength = inputValue.length;
+  
+  if (min === 'default') {
+    // console.log(min);
+    min = 2;
+    // console.log(min);
 
-  if (inputName === 'phone') {
-    if ((inputValueLength >= 10) && (inputValueLength <= 12)) {
-      // console.log(typeOfInput.value, inputValueLength, 'it has length');
-      return true;
-    } else {
+  } 
 
-      return false;
-    }
-  } else if (inputName === 'password') {
-    if ((inputValueLength >= 6) && (inputValueLength <= 100)) {
-      // console.log(typeOfInput.value, inputValueLength, 'it has length');
-      return true;
-    } else {
-      // console.log(false);
-      return false;
-    }
-  } else {
-
-    if ((typeOfInput !== '') && (inputValueLength >= 2)) {
-      // console.log(typeOfInput.value, inputValueLength,'it has length');
-      return true;
-    } else {
-      // console.log(false);
-      return false;
-    }
+  if (max === 'default') {
+    
+    max = 200;
+   
   }
 
+  if ((typeOfInput !== '') && (inputValueLength >= min) && (inputValueLength <= max)) {
+    // console.log(inputValue, inputValueLength, min,max);
+
+    return true;
+
+  } else {
+
+    return false;
+  }
 
 }
 
@@ -168,9 +188,11 @@ function validateData(formOfInputs, typeOfInput, regexp) {
 
 
 
+
 function showError(element) {
 
   var field = element;
+
   element.classList.remove('is-valid');
   element.classList.add('is-invalid');
 
@@ -181,71 +203,47 @@ function showError(element) {
     var dataAttrValue = el.getAttribute('data-messagetype');
 
     if (dataAttrValue === field.name) {
+
       el.classList.add('is-for-error');
+
     }
 
   });
+
+
+
 }
 
 
 
 function showStatus(currentElement) {
 
-  changeInputStatus(currentElement);
-  // currentElement.classList.remove('is-invalid');
+  // changeInputStatus(currentElement);
+  currentElement.classList.remove('is-invalid');
   currentElement.classList.add('is-valid');
-
-
-
+  changeMessageStatus(currentElement, true);
+ 
 };
 
 
-function changeInputStatus(input = 'false') {
-
-  if (input === 'false') {
-
-    var inputElements = document.querySelectorAll('.js-form-input');
-
-    inputElements.forEach(function(el) {
-
-      el.classList.remove('is-invalid');
-
-    });
-
-  }
-
-  input.classList.remove('is-invalid');
 
 
-  changeMessageStatus(input, true);
-
-}
-
-
-
-function changeMessageStatus(input, messageBox = false) {
+function changeMessageStatus(input, messageBox) {
 
   var errorMessages = document.querySelectorAll('.js-error-message');
 
   errorMessages.forEach(function(el) {
 
 
-    if (messageBox === false) {
+    var dataAttrValue = el.getAttribute('data-messagetype');
+
+    if (dataAttrValue === input.name) {
+
+      // console.log(true);
 
       el.classList.remove('is-for-error');
 
-    } else {
-
-
-      var dataAttrValue = el.getAttribute('data-messagetype');
-
-      if (dataAttrValue === input.name) {
-        console.log(true);
-        el.classList.remove('is-for-error');
-      }
-
     }
-
 
 
   });
@@ -254,8 +252,10 @@ function changeMessageStatus(input, messageBox = false) {
 }
 
 
+
+
 function showCongrats() {
 
   alert('CONGRATS, this form was submitted');
-	
+
 }
