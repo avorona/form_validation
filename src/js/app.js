@@ -1,16 +1,24 @@
 import './polyfills';
 
-var form = document.getElementById('userForm');
 
 
-form.addEventListener('submit', function() {
-  event.preventDefault();
-  validateform(this);
+var forms = document.querySelectorAll('.js-userForm');
 
-  return false;
+forms.forEach(function(el) {
+
+  el.addEventListener('submit', function() {
+
+    event.preventDefault();
+    validateform(event.currentTarget);
+
+    return false;
+
+
+  });
 
 
 });
+
 
 
 
