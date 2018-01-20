@@ -1,4 +1,3 @@
-import './polyfills';
 
 export default class Validator {
 
@@ -19,19 +18,14 @@ export default class Validator {
   addFormListener() {
 
   	let self=this;
-
     let forms = document.querySelectorAll(self.forms);
 
     forms.forEach(function(el) {
 
       el.addEventListener('submit', function() {
-
         event.preventDefault();
-
         self.validateform(event.currentTarget);
-
         return false;
-
       });
 
     });
@@ -43,10 +37,6 @@ export default class Validator {
     let self = this;
 
     self.defineParams(formToValidate);
-
-    // self.checkValidationStatus(formToValidate);
-    // alert('stop');
-    // self.reportAboutStatus();
 
   }
 
@@ -74,15 +64,15 @@ export default class Validator {
       {
         name: form.elements['name'],
         pattern: regexpParams.stringRegExp,
-        minLength: 'default',
-        maxLength: 'default'
+        minLength: 2,
+        maxLength: 200
 
       },
       {
         name: form.elements['surname'],
         pattern: regexpParams.stringRegExp,
-        minLength: 'default',
-        maxLength: 'default'
+        minLength: 2,
+        maxLength: 200
 
       },
       {
@@ -116,209 +106,99 @@ export default class Validator {
 
     ];
 
-    // console.log(inputsParams);
-
-    this.validationParams= inputsParams.filter(function(el) {
- 
-  	if (el.name !== undefined) return el;
-
-    });
-
-    console.log(this.validationParams);
-
+    this.validationParams= inputsParams.filter(el => el.name !== undefined);
+    
     this.checkValidationStatus(form);
-
-
   }
-
 
 
   checkValidationStatus(form) {
 
-    let self=this;
-
-   
-    let validationStatus = this.validationParams.map(function(el) {
-
-
-      // console.log(el);
-
+    let self=this;  
+    let validationStatus = this.validationParams.map(el => {
 
       if (self.validateInput(form, el.name, el.pattern, el.minLength, el.maxLength)) {
-
-        // console.log(el);
-
-        
         return true;
-
       } else {
-
         return false;
-
       }
-
     });
 
-    // show result of validation
-    // console.log(validationStatus);
-
     if (validationStatus.includes(false)) {
-
       return false;
-
     } else {
-
       self.showCongrats();
-
       form.submit();
-
     }
-
-
   }
-
 
 
   validateInput(form, input, regexp, minLength, maxLength) {
-
-
-    // console.log(minLength, maxLength);
     if ((!this.validateLength(form, input, minLength, maxLength)) || (!this.validateData(form, input, regexp))) {
-
-    // console.log(validateLength(form, input,minLength,maxLength), validateData(form, input, regexp));
-
       this.showError(input);
-
       return false;
-
     } else {
-
       this.showStatus(input);
-
       return true;
     }
-
   }
-
 
 
   validateLength(formOfInputs, typeOfInput, min, max) {
 
-    let inputName = typeOfInput.name;
     let inputValue = typeOfInput.value;
     let inputValueLength = inputValue.length;
   
-    if (min === 'default') {
-    // console.log(min);
-      min = 2;
-    // console.log(min);
-
-    } 
-
-    if (max === 'default') {
-    
-      max = 200;
-   
-    }
-
     if ((typeOfInput !== '') && (inputValueLength >= min) && (inputValueLength <= max)) {
-    // console.log(inputValue, inputValueLength, min,max);
-
       return true;
-
-    } else {
-
-      return false;
-    }
-
+    } 
+    return false;
+    
   }
 
 
   validateData(formOfInputs, typeOfInput, regexp) {
-
     let inputValue = typeOfInput.value;
-
-    if (regexp.test(inputValue)) {
-
-
-      return true;
-    }
-
-    return false;
-
+    return regexp.test(inputValue) ? true: false; 
   }
 
 
-
   showError(element) {
-
-    let field = element;
-
     element.classList.remove('is-valid');
     element.classList.add('is-invalid');
 
     let errorMessages = document.querySelectorAll('.js-error-message');
 
-    errorMessages.forEach(function(el) {
-
-      let dataAttrValue = el.getAttribute('data-messagetype');
-
-      if (dataAttrValue === field.name) {
-
+    errorMessages.forEach(el => {
+      let dataAttrValue = el.dataset.messageType;
+      if (dataAttrValue === element.name) {
         el.classList.add('is-for-error');
-
       }
-
     });
-
-
-
   }
 
+
   showStatus(element) {
-
-  // changeInputStatus(currentElement);
     element.classList.remove('is-invalid');
-
     element.classList.add('is-valid');
-
     this.changeMessageStatus(element);
  
   };
 
 
-
-
-
   changeMessageStatus(input) {
 
     let errorMessages = document.querySelectorAll('.js-error-message');
-
-    errorMessages.forEach(function(el) {
-
-
-      let dataAttrValue = el.getAttribute('data-messagetype');
-
+    errorMessages.forEach(el => {
+      let dataAttrValue = el.dataset.messageType;
       if (dataAttrValue === input.name) {
-
-      // console.log(true);
-
         el.classList.remove('is-for-error');
-
       }
-
-
     });
-
-
   }
-
 
   showCongrats() {
-
     alert('CONGRATS, this form was submitted');
-
   }
-
 
 }
