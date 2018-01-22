@@ -52,7 +52,7 @@ const regFrom = [
     inputName: "delivery",
     labelText: "Free delivery",
     value:  false,
-    errorMessage: ""
+
   },
   {
     inputId: "weightMetter",
@@ -61,7 +61,6 @@ const regFrom = [
     inputName: "weightMetter",
     labelText: "Check if your new pet weight is metter",
     value: false,
-    errorMessage: ""
   }
 ]
 

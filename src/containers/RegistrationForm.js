@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import './RegistrationForm.css';
-import DayPicker from "react-day-picker";
+import TextField from "material-ui/TextField";
+import RaisedButton from "material-ui/RaisedButton";
 import DayPickerInput from "react-day-picker/DayPickerInput";
-
 import "react-day-picker/lib/style.css";
 
 
@@ -27,7 +27,7 @@ class RegistrationForm extends Component {
 handleSubmit(event) {
 
   alert(`This form have been submitted`);
-event.preventDefault();
+  event.preventDefault();
 }
 
 handleChange(event) {
@@ -50,14 +50,12 @@ handleChange(event) {
 render ()  {
 // console.log(this.state, this.props.items)
 let self=this;
-let deliveryField;
+let deliveryField='';
 // console.log(self.state.deliveryIsNeeded)
 if (self.state["delivery"]) {
 deliveryField= (
   <div className="form-reg__field form-reg__field_del">
   
-  <DayPicker selectedDays={new Date()}/>
-
 <DayPickerInput placeholder="DD/MM/YYYY" format="DD/MM/YYYY" />
 
   </div>
@@ -72,33 +70,33 @@ return (
 
 <form onSubmit={this.handleSubmit} className="form-reg">
 
-
-
 {this.props.items.map( (item, index) => 
  
-  <div className="form-reg__field" key={`field${item.key}`} >
-  <label htmlFor={item.inputId} key={`label${item.key}`}>{item.labelText}</label>
 
-  <input  
+  <TextField
+    hintText={item.labelText}
+    floatingLabelText={item.labelText}
+    floatingLabelFixed  
     id={item.inputId}
     className='form-reg__input'
     type={item.inputType}
     name={item.inputName}
     key= {`input${item.key}`}
     data-messagetype={item.inputName}
-    onChange={this.handleChange}
+    onChange={e => self.handleChange}
     value={this.state[item.value]}
    />
-   <p className="form-reg__error_text">{item.errorMessage}</p>
-  </div>
+   
 
-)};
-
-
-{deliveryField}
+  //  {item.errorMessage ? <p className="form-reg__error_text">{item.errorMessage}</p> : ''}
+  //  {(item.inputName === 'delivery') ? deliveryField : ''} 
+   
 
 
-<button>registration</button>
+)}
+
+
+<RaisedButton label="Submit" onClick={e => this.handleSubmit(e)} primary />
 </form>
 
 )
