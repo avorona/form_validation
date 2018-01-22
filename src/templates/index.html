@@ -1,0 +1,57 @@
+---
+
+title: Index page
+
+formTextInput: [
+
+	{inputId: "name", inputType: "text", inputName: "name", labelText: "Name", errorMessage: "Type your name in correct way (a-z and A-Z)"},
+	{inputId: "surname", inputType: "text", inputName: "surname", labelText: "Surname", errorMessage: "Type your name in correct way (a-z and A-Z)"},
+	{inputId: "phone", inputType: "text", inputName: "phone", labelText: "Phone", errorMessage: "Phone number has to be 10-12 chars long and consists of numbers"},
+	{inputId: "email", inputType: "text", inputName: "email", labelText: "Email", errorMessage: "Write email in format example22@mail.com"},
+	{inputId: "password", inputType: "password", inputName: "password", labelText: "Password", errorMessage: "Password has to contains 6 chars or more (numbers and at least 1 alphabetical char)"}
+]
+
+---
+
+
+{% extends "layouts/_layout.html" %}
+
+{% block content %}
+
+<header class="page__header">
+  <p>form</p>
+</header>
+<section class="section section_form">
+  <!-- BEGIN BLOCK form-wrapper -->
+  <div class="sticker">
+    <!-- BEGIN BLOCK form-status-bar -->
+    <div class="form-status-bar">
+      <div class="form-status-bar__item form-status-bar__item_name js-error-message" data-message-type="name"></div>
+      <div class="form-status-bar__item form-status-bar__item_surname js-error-message" data-message-type="surname"></div>
+      <div class="form-status-bar__item form-status-bar__item_phone js-error-message" data-message-type="phone">
+        <</div>
+          <div class="form-status-bar__item form-status-bar__item_email js-error-message" data-message-type="email"></div>
+          <div class="form-status-bar__item form-status-bar__item_password js-error-message" data-message-type="password"></div>
+      </div>
+      <!-- END BLOCK form-status-bar -->
+      <form action="" class="form js-userForm" id="userForm">
+        {% for t in formTextInput %}
+        <div class="form__field">
+          <label class="form__label" for="{{ t.inputName }}">{{ t.labelText}}</label>
+          <input type="{{t.inputType}}" name="{{ t. inputName }}" id="{{ t. inputId }}" class="form__input form__input_text js-form-input"
+            required />
+          <p class="error-message js-error-message" data-message-type="{{ t.inputName }}">{{t.errorMessage}}}</p>
+        </div>
+        {% endfor %}
+        <div class="form__field form__field_left">
+          <label for="checkbox" class="form__label">remember me</label>
+          <input type="checkbox" name="checkbox" id="checkbox" class="form__checkbox" /> </div>
+        <div class="form__field form__field_right">
+          <input type="submit" id="submitForm" class="form__submit button" name="submit js-submit" value="Submit" /> </div>
+      </form>
+    </div>
+    <!-- END BLOCK form-wrapper -->
+</section>
+
+
+{% endblock %}
