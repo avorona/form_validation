@@ -1,0 +1,15 @@
+.View {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+.View__item {
+  flex: 0 0 calc( 100vw - 800px);
+}
+
+.View__item_1 {
+  flex: 0 0 600px
+}
