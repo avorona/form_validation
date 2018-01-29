@@ -28,6 +28,7 @@ class RegistrationForm extends Component {
       email: "",
       emailError: "",
       delivery: false,
+      deliveryDay: '',
       weightMetter: false
     }
 
@@ -116,6 +117,7 @@ class RegistrationForm extends Component {
         phone: "",
         email: "",
         delivery: false,
+        deliveryDay:'',
         weightMetter: false
       });
       this.props.onChange({
@@ -126,6 +128,7 @@ class RegistrationForm extends Component {
         phone: "",
         email: "",
         delivery: false,
+        deliveryDay:'',
         weightMetter: false
       })
     }
@@ -158,12 +161,30 @@ class RegistrationForm extends Component {
       this.setState({
         delivery: !this.state.delivery
       })
+      this.props.onChange({
+        delivery: !this.state.delivery
+      });
     }
 
 
   }
   handleWeightCheck = (event) => {
+    this.setState({
+      weightMetter: !this.state.weightMetter
+    })
+    this.props.onChange({
+      weightMetter: !this.state.weightMetter
+    });
     console.log('We will send you the fatest pet')
+  }
+  handleDatePicking = (day) => {
+let date=day.toDateString();
+    this.setState({
+      deliveryDay: date
+    })
+    this.props.onChange({
+      deliveryDay: date
+    });
   }
   render() {
     // console.log(this.state, this.props.items)
@@ -179,6 +200,7 @@ class RegistrationForm extends Component {
         <DayPickerInput 
          placeholder = "DD/MM/YYYY"
           format = "DD/MM/YYYY"
+          onDayChange={self.handleDatePicking}
            />
 
         </div>
@@ -300,6 +322,7 @@ class RegistrationForm extends Component {
       }
       />
       <Checkbox 
+      className="form-reg__checkbox"
       label="Check it if you want to choose a day for delivery"
       labelPosition="left"
       name="delivery"
@@ -312,6 +335,7 @@ class RegistrationForm extends Component {
      {deliveryField }
       
       <Checkbox
+      className="form-reg__checkbox"
       label="Check it if weight doesn't metter"
       labelPosition="left"
       value={this.state.weight}

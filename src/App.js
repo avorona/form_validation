@@ -2,9 +2,19 @@ import React, { Component } from 'react';
 import RegistrationForm from './containers/RegistrationForm';
 import View from './components/View';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import {green900,green800, blueGrey600} from 'material-ui/styles/colors';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import './index.css';
-// import regForm from './data_static';
+
+const muiTheme=getMuiTheme({
+
+  palette: {
+    primary1Color: green800,
+    textColor: green900
+  },
+  fontFamily: 'monospace, Ubuntu, sans-serif'
+})
+
 
 class App extends Component {
   state = {
@@ -19,10 +29,12 @@ class App extends Component {
     
     });
   }
+
+
   render() {
     return (
       <View>
-     <MuiThemeProvider muiTheme={getMuiTheme()}>
+     <MuiThemeProvider muiTheme={muiTheme}>
         <RegistrationForm  onChange={fields=> this.onChange(fields)} />
        </MuiThemeProvider>
 <p className="output-field"> 
